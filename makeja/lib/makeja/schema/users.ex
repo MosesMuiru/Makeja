@@ -1,7 +1,6 @@
 defmodule Makeja.Schema.Users do
   use Ecto.Schema
-  alias Makeja.Schema.Roles
-  alias Makeja.Schema.House
+  # alias Makeja.Schema.Roles
 
   import Ecto.Changeset
 
@@ -13,22 +12,19 @@ defmodule Makeja.Schema.Users do
     field :email, :string
     field :password_hash, :string
     field :confirmed, :boolean, default: false
+    # 
+    field :role, Ecto.Enum, values: [:landlord, :agent, :admin]
 
-    belongs_to :roles, Roles
-    has_many :houses, House
-
+    has_many :reviews, Makeja.Schema.Reviews
+    has_many :houses, Makeja.Schema.Users
     timestamps()
   end
 
-
   def changeset(user, params \\ %{}) do
-
     user
     |> cast(params, [:first_name, :last_name, :phone_number, :password_hash])
     |> validate_required([:first_name, :last_name, :phone_number, :password_hash])
     |> validate_format(:email, ~r/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-    |> unique_constraint(:email)
+    |> unique_constraint([:email, :phone_number])
   end
-
 end
-

@@ -8,6 +8,7 @@ defmodule Makeja.Schema.Reviews do
     field :comment, :string
 
     belongs_to :attachments, Attachments
+    belongs_to :users, Makeja.Schema.Users
     timestamps()
   end
 end

@@ -6,7 +6,7 @@ defmodule Makeja.Schema.Attachments do
     field :url, :string
 
     belongs_to :house, Makeja.Schema.House
-    belongs_to :attachments, Makeja.Schema.Reviews
+    belongs_to :reviews, Makeja.Schema.Reviews
 
     timestamps()
   end

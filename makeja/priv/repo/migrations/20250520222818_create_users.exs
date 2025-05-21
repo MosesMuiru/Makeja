@@ -3,16 +3,19 @@ defmodule Makeja.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
+      add :uuid, :uuid, null: false
       add :first_name, :string
       add :last_name, :string
       add :phone_number, :string
       add :email, :string
       add :confirmed, :boolean
       add :password_hash, :string
+      add :role, :string
 
-      add :role, references(:role, on_delete: :delete_all)
+      # making sure that the email is unique
       timestamps()
     end
 
+    create unique_index(:users, [:email, :phone_number])
   end
 end
