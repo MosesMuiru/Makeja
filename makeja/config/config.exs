@@ -22,6 +22,13 @@ config :makeja, MakejaWeb.Endpoint,
   pubsub_server: Makeja.PubSub,
   live_view: [signing_salt: "MQePQ+G8"]
 
+# cloudinary configs
+
+config :cloudex,
+  api_key: System.get_env("API_KEY"),
+  secret: System.get_env("API_SECRET"),
+  cloud_name: System.get_env("PUBLIC_ID")
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

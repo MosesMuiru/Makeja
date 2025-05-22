@@ -5,6 +5,8 @@ defmodule Makeja.Repo.Migrations.CreateAttachments do
     create table("attachments") do
       add :uuid, :uuid, null: false
       add :url, :string
+
+      timestamps()
     end
   end
 end
