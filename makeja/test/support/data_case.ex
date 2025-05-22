@@ -24,6 +24,7 @@ defmodule Makeja.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Makeja.DataCase
+      import Makeja.Factory
     end
   end
 
