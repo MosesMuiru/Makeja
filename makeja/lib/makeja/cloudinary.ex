@@ -7,7 +7,7 @@ defmodule Makeja.Cloudinary do
     |> case do
       {:ok, response} ->
         response.url
-        |> AttachmentsRepo.insert()
+        |> AttachmentsRepo.insert_at()
 
         response.url
 
