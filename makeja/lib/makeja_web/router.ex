@@ -18,6 +18,7 @@ defmodule MakejaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/signup", SignUpLive
   end
 
   # Other scopes may use custom stacks.
