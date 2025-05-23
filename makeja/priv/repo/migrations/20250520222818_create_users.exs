@@ -4,8 +4,7 @@ defmodule Makeja.Repo.Migrations.CreateUsers do
   def change do
     create table(:users) do
       add :uuid, :uuid, null: false
-      add :first_name, :string
-      add :last_name, :string
+      add :username, :string
       add :phone_number, :string
       add :email, :string
       add :confirmed, :boolean

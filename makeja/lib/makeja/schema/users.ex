@@ -6,14 +6,13 @@ defmodule Makeja.Schema.Users do
 
   schema "users" do
     field :uuid, Ecto.UUID, autogenerate: true
-    field :first_name, :string
-    field :last_name, :string
+    field :username, :string
     field :phone_number, :string
     field :email, :string
     field :password_hash, :string
     field :confirmed, :boolean, default: false
     # 
-    field :role, Ecto.Enum, values: [:landlord, :agent, :admin]
+    field :role, Ecto.Enum, values: [:landlord, :agent, :admin, :user]
 
     has_many :reviews, Makeja.Schema.Reviews
     has_many :houses, Makeja.Schema.Users
@@ -22,8 +21,8 @@ defmodule Makeja.Schema.Users do
 
   def changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:first_name, :last_name, :phone_number, :password_hash])
-    |> validate_required([:first_name, :last_name, :phone_number, :password_hash])
+    |> cast(params, [:username, :phone_number, :password_hash])
+    |> validate_required([:username, :phone_number, :password_hash])
     |> validate_format(:email, ~r/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
     |> unique_constraint([:email, :phone_number])
   end
