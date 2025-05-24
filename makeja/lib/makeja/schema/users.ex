@@ -11,8 +11,9 @@ defmodule Makeja.Schema.Users do
     field :email, :string
     field :password_hash, :string
     field :confirmed, :boolean, default: false
-    # 
     field :role, Ecto.Enum, values: [:landlord, :agent, :admin, :user]
+    field :phone_number_verified, :boolean, default: false
+    field :time_verified, :utc_datetime
 
     has_many :reviews, Makeja.Schema.Reviews
     has_many :houses, Makeja.Schema.Users

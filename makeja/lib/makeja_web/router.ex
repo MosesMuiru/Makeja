@@ -19,6 +19,7 @@ defmodule MakejaWeb.Router do
 
     get "/", PageController, :home
     live "/signup", SignUpLive
+    live "/login", LoginLive
   end
 
   # Other scopes may use custom stacks.
