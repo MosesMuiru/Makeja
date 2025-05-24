@@ -27,4 +27,9 @@ defmodule Makeja.Sms.SmsConfirmation do
         |> IO.inspect(label: "this is working")
     end
   end
+
+  @doc """
+  the message should a random message
+
+  """
 end

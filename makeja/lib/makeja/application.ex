@@ -17,7 +17,10 @@ defmodule Makeja.Application do
       # Start a worker by calling: Makeja.Worker.start_link(arg)
       # {Makeja.Worker, arg},
       # Start to serve requests, typically the last entry
-      MakejaWeb.Endpoint
+      MakejaWeb.Endpoint,
+      # this is to start my cache
+      # table name --> is the cache
+      {Makeja.Cache.MyCache, name: "otp_cache"}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
