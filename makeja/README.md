@@ -16,3 +16,23 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+# small documentaion of my own redis like cache using ets
+
+
+how to create a new table in ets
+  1. :ets.new(:table_name, [:set, :protected, :Named_table])
+
+  can be able to access table by it's anme
+
+  2. inserting to a new table
+    :ets.new(:table_name, {"column_name", "column_data"})
+
+  3. deleting to  a new table
+    :ets.delete(:table_name, "column_name")
+
+  
+  
+  
+
