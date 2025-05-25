@@ -22,12 +22,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 
 how to create a new table in ets
-  1. :ets.new(:table_name, [:set, :protected, :Named_table])
+  1. :ets.new(:table_name, [:set, :protected, :named_table])
 
   can be able to access table by it's anme
 
   2. inserting to a new table
-    :ets.new(:table_name, {"column_name", "column_data"})
+    :ets.insert_at(:table_name, {"column_name", "column_data"})
 
   3. deleting to  a new table
     :ets.delete(:table_name, "column_name")
