@@ -43,9 +43,6 @@ defmodule Makeja.Cache.MyCache do
 
   @impl true
   def init(opts) do
-    opts
-    |> IO.inspect(label: "----O--")
-
     # initiate the table
     table_name =
       opts
@@ -53,7 +50,6 @@ defmodule Makeja.Cache.MyCache do
       |> String.to_atom()
 
     table = :ets.new(table_name, [:set, :protected, :named_table])
-    IO.inspect(table, label: "this is the table created")
 
     {:ok, opts}
   end

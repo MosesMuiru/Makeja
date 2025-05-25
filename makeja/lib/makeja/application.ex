@@ -23,10 +23,19 @@ defmodule Makeja.Application do
       {Makeja.Cache.MyCache, name: "otp_cache"}
     ]
 
+    :mnesia.create_schema([node()])
+    :mnesia.start()
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Makeja.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  def applicationd do
+    [
+      extra_applications: [:mnesia]
+    ]
   end
 
   # Tell Phoenix to update the endpoint configuration

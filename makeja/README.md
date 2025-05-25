@@ -32,6 +32,25 @@ how to create a new table in ets
   3. deleting to  a new table
     :ets.delete(:table_name, "column_name")
 
+# crud operations in mnesia database
+  1. starting mnesia database
+    :mnesia.create_schema([node()])
+    :mnesia.start() -> this will start the databse
+
+  2. Create table
+   :mnesia.create(table_name, [attributes: [:column_name, :column_name]])
+
+   add indexes
+   :mnesia.add_table_index(Person, :column_name)
+
+  3. insert elments in table
+    :mnesia.write({Person, :column_id, :column_name, :column_name})
+  
+  4. 
+    
+    
+
+
   
   
   
