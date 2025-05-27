@@ -24,6 +24,7 @@ defmodule Makeja.Application do
     ]
 
     :mnesia.create_schema([node()])
+    # :mnesia.change_table_copy_type(:schema, node(), :disc_copies)
     :mnesia.start()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
