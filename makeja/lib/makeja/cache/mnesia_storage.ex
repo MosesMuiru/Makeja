@@ -21,6 +21,16 @@ defmodule Makeja.Cache.MnesiaStorage do
   end
 
   def init(opts) do
+    :mnesia.create_table(Otp, attributes: [:user_id, :otp])
+    |> case do
+      {:attomic, :ok} ->
+        IO.puts("Otp table created")
+
+      {:aborted, reason} ->
+        reason
+        |> IO.inspect(label: "Table not Created at init ---->")
+    end
+
     {:ok, opts}
   end
 

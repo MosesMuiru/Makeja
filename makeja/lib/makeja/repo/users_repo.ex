@@ -21,15 +21,27 @@ defmodule Makeja.Repo.UsersRepo do
 
   @spec get_user_by_id(String.t()) :: response_t()
   def get_user_by_id(user_id) do
-    User
+    Users
     |> where([u], u.uuid == ^user_id)
     |> Repo.one()
   end
 
   @spec get_user_by_phone_number(s) :: response_t
   def get_user_by_phone_number(phone_number) do
-    User
+    IO.inspect(phone_number, label: "its working")
+
+    Users
     |> where([u], u.phone_number == ^phone_number)
     |> Repo.one()
+  end
+
+  @spec get_user_by_phone_number_and_id(s, s) :: response_t
+  def get_user_by_phone_number_and_id(user_id, phone_number) do
+    user =
+      Users
+      |> where([u], u.phone_number == ^phone_number and u.uuid == ^user_id)
+      |> Repo.one()
+
+    {:ok, user}
   end
 end
