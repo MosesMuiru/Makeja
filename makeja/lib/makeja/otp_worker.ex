@@ -13,12 +13,10 @@ defmodule Makeja.OtpWorker do
       (:rand.uniform(9000) + 999)
       |> to_string()
 
-    UsersRepo.get_user_by_phone_number_and_id(user_id, phone_number)
-    |> case do
-      {:ok, user} ->
-        otp
-        |> IO.inspect(label: "this si the oottp -->")
+    user = UsersRepo.get_user_by_phone_number_and_id(user_id, phone_number)
 
+    case user do
+      user when not is_nil(user) ->
         # send the otp
         Task.async(fn -> SmsConfirmation.send_confirmation_sms(phone_number, otp) end)
 
@@ -26,8 +24,7 @@ defmodule Makeja.OtpWorker do
 
         true
 
-      nil ->
-        IO.inspect("Buda, User doesn't exist")
+      _ ->
         false
     end
 
@@ -43,7 +40,6 @@ defmodule Makeja.OtpWorker do
       {:atomic, [response]} ->
         {_table_name, _user_id, otp} = response
         otp == sent_otp
-        true
 
       {:aborted, {:already_exit, table_name}} ->
         table_name

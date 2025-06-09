@@ -15,6 +15,10 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
+        makeja:{
+          dark: "#2b1c14",
+          light: "#f4ebda"
+        }
       }
     },
   },

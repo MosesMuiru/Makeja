@@ -37,11 +37,8 @@ defmodule Makeja.Repo.UsersRepo do
 
   @spec get_user_by_phone_number_and_id(s, s) :: response_t
   def get_user_by_phone_number_and_id(user_id, phone_number) do
-    user =
-      Users
-      |> where([u], u.phone_number == ^phone_number and u.uuid == ^user_id)
-      |> Repo.one()
-
-    {:ok, user}
+    Users
+    |> where([u], u.phone_number == ^phone_number and u.uuid == ^user_id)
+    |> Repo.one()
   end
 end

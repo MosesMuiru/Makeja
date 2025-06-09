@@ -49,7 +49,7 @@ defmodule Makeja.Cache.MyCache do
       |> Keyword.get(:name)
       |> String.to_atom()
 
-    table = :ets.new(table_name, [:set, :protected, :named_table])
+    :ets.new(table_name, [:set, :protected, :named_table])
 
     {:ok, opts}
   end
