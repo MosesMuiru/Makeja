@@ -4,16 +4,35 @@ defmodule Makeja.Cache.MnesiaStorage do
   # during start
 
   def start_link(opts) do
+    opts
+    |> IO.inspect(label: "This is where the process is started")
+
+    :mnesia.create_schema([node()])
+    # :mnesia.change_table_copy_type(:schema, node(), :disc_copies)
+    :mnesia.start()
+
+    opts
+    |> IO.inspect(label: "This are the opts")
+
+    :mnesia.create_table(Otp, attributes: [:user_id, :otp])
+    |> case do
+      {:atomic, :ok} ->
+        IO.puts("Otp table created")
+
+      {:aborted, reason} ->
+        reason
+        |> IO.inspect(label: "Table not Created at init ---->")
+    end
+
     GenServer.start_link(__MODULE__, opts)
   end
 
   # @spec create_table(pid(), {atom(), (table_name, list())}) :: :ok
-  def create_table(pid, {:create_table, {_table_name, _list_of_column_names} = message}) do
+  def create_table(pid, {_table_name, _list_of_column_names} = message) do
     GenServer.cast(pid, {:create_table, message})
   end
 
-  # 
-  def insert_to_mnesia(pid, {:insert, message}) do
+  def insert_to_mnesia(pid, {_table_name, _id, _otp, _ttl} = message) do
     GenServer.cast(pid, {:insert, message})
   end
 
@@ -26,7 +45,7 @@ defmodule Makeja.Cache.MnesiaStorage do
   end
 
   def handle_cast({:create_table, {table_name, list_of_column_names} = _message}, state) do
-    :mnesia.create_table(table_name, attributes: list_of_column_names)
+    :mnesia.create_table(table_name, attributes: list_of_column_names ++ [:ttl])
     |> case do
       {:atomic, :ok} ->
         IO.inspect(label: "table created")
@@ -39,7 +58,9 @@ defmodule Makeja.Cache.MnesiaStorage do
     {:noreply, state}
   end
 
-  def handle_cast({:insert, message}, state) do
+  def handle_cast({:insert, {_table_name, id, _otp, ttl} = message}, state) do
+    IO.puts("this si wworking")
+
     fn ->
       :mnesia.write(message)
     end
@@ -52,6 +73,9 @@ defmodule Makeja.Cache.MnesiaStorage do
         reason
         |> IO.inspect(label: "__error__")
     end
+
+    IO.inspect("Otp will be deleted after #{ttl}")
+    Process.send_after(self(), {:delete_otp, {id}}, ttl)
 
     {:noreply, state}
   end
@@ -77,5 +101,23 @@ defmodule Makeja.Cache.MnesiaStorage do
       end
 
     {:reply, data, state}
+  end
+
+  ## ttl calculator, you should 
+  ## 
+  def handle_info(:delete_otp, {table_name, id}) do
+    fn ->
+      :mnesia.delete({table_name, id})
+    end
+    |> :mnesia.transaction()
+    |> case do
+      {:atomic, _} ->
+        IO.inspect(label: "otp id #{id}")
+
+      {:aborted, {reason, _table_name}} ->
+        raise String.to_atom(reason)
+    end
+
+    {:noreply, true}
   end
 end

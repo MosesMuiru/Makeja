@@ -17,9 +17,12 @@ defmodule MakejaWeb.Router do
   scope "/", MakejaWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/house", HomeLive
+    live "/houses", HousesLive
     live "/signup", SignUpLive
     live "/login", LoginLive
+    live "/", HomeLive
   end
 
   # Other scopes may use custom stacks.

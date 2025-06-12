@@ -23,7 +23,9 @@ defmodule Makeja.Application do
       {Makeja.Cache.MyCache, name: "otp_cache"}
     ]
 
+    IO.inspect("This is where the process is started")
     :mnesia.create_schema([node()])
+    # :mnesia.change_table_copy_type(:schema, node(), :disc_copies)
     :mnesia.start()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -32,7 +34,7 @@ defmodule Makeja.Application do
     Supervisor.start_link(children, opts)
   end
 
-  def applicationd do
+  def application do
     [
       extra_applications: [:mnesia]
     ]

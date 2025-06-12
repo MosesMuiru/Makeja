@@ -3,8 +3,8 @@ defmodule Makeja.Sms.SmsConfirmation do
   # then generate the code
   # it should be a random number between 1 - 5
   # then it should be saved to db, at random
-  @spec send_confirmation_sms(String.t()) :: any()
-  def send_confirmation_sms(phone_number) do
+  @spec send_confirmation_sms(String.t(), String.t()) :: any()
+  def send_confirmation_sms(phone_number, message) do
     headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Bearer #{System.get_env("TIARA_KEY")}"}
@@ -14,7 +14,7 @@ defmodule Makeja.Sms.SmsConfirmation do
       %{
         from: "CONNECT",
         to: phone_number,
-        message: "1234",
+        message: "Welcome TO Makeja, Here is you Code: \n #{message}",
         messageType: "1"
       }
       |> Jason.encode!()
@@ -24,12 +24,6 @@ defmodule Makeja.Sms.SmsConfirmation do
     |> case do
       {:ok, response} ->
         response
-        |> IO.inspect(label: "this is working")
     end
   end
-
-  @doc """
-  the message should a random message
-
-  """
 end
