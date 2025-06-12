@@ -22,11 +22,32 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
+
+let Hooks = {}
+
+Hooks.LayoutHook = {
+  this.el.addEventListener("click", (e) => {
+    console.log("this has been clicked": e)
+  })
+
+}
+
+const btn = document.getElementById("test")
+console.log("this is working")
+
+btn.addEventListener("click", (event) => {
+  console.log("this butn clieck:", event)
+})
+
+
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken}
+  params: {_csrf_token: csrfToken},
+  hooks: Hooks
 })
+
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

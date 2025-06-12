@@ -19,6 +19,7 @@ defmodule MakejaWeb.Router do
 
     # get "/", PageController, :home
     live "/house", HomeLive
+    live "/houses", HousesLive
     live "/signup", SignUpLive
     live "/login", LoginLive
     live "/", HomeLive
