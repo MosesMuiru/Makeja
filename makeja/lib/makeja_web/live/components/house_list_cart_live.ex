@@ -15,10 +15,13 @@ defmodule MakejaWeb.Components.HouseCard do
   attr :id, :string
 
   def house_card(assigns) do
-    IO.inspect(assigns, label: "assigns --->")
-
     ~H"""
-    <a href="houses/#{id}" class="block rounded-lg p-4 shadow-xs shadow-indigo-100">
+    <a
+      phx-click="more"
+      id="housesid"
+      phx-value-id={@id}
+      class="block rounded-lg p-4 shadow-xs shadow-indigo-100"
+    >
       <img alt="image" src={@image} class="h-56 w-full rounded-md object-cover" />
 
       <div class="mt-2">
@@ -131,5 +134,10 @@ defmodule MakejaWeb.Components.HouseCard do
       </div>
     </a>
     """
+  end
+
+  def handle_event("more", %{"id" => id}, socket) do
+    IO.inspect("this is workding")
+    {:noreply, redirect(socket, to: "/houses?id=#{id}")}
   end
 end
