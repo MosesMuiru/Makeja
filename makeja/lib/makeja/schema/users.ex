@@ -15,6 +15,7 @@ defmodule Makeja.Schema.Users do
     field :phone_number_verified, :boolean, default: false
     field :time_verified, :utc_datetime
 
+    has_one :subscriptions, Makeja.Subscription
     has_many :reviews, Makeja.Schema.Reviews
     has_many :houses, Makeja.Schema.Users
     timestamps()
