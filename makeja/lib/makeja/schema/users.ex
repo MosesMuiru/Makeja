@@ -25,7 +25,7 @@ defmodule Makeja.Schema.Users do
     user
     |> cast(params, [:username, :phone_number, :password_hash])
     |> validate_required([:username, :phone_number, :password_hash])
+    |> unique_constraint([:email, :phone_number, :username])
     |> validate_format(:email, ~r/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-    |> unique_constraint([:email, :phone_number])
   end
 end

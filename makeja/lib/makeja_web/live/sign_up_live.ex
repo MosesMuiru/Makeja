@@ -69,11 +69,11 @@ defmodule MakejaWeb.SignUpLive do
 
             {:noreply, put_flash(socket, :info, "Buda welcome")}
 
-          {:error, _} ->
+          {:error, reason} ->
             "Error creating account"
             |> IO.inspect()
 
-            {:noreply, put_flash(socket, :error, "Kuna error flani")}
+            {:noreply, put_flash(socket, :error, reason)}
         end
 
       false ->
