@@ -13,4 +13,16 @@ defmodule MakejaWeb.HomeLive do
 
     {:noreply, redirect(socket, to: "/houses?id=#{id}")}
   end
+
+  def handle_event("search_house", _, socket) do
+    IO.inspect(label: "search button is woring")
+
+    {:noreply, socket}
+  end
+
+  def handle_event("search_change", _unsigned_params, socket) do
+    IO.inspect(label: "the search event is woring")
+
+    {:noreply, socket}
+  end
 end
