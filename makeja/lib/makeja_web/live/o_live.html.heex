@@ -1,8 +1,137 @@
 <.modal id="otp" show={true} on_cancel={JS.navigate(~p"/login")}>
-  <div>
-    <h1 class="text-center ">Enter Your <span class="w-bold">OTP</span></h1>
-    <.form for={}>
-      <.input name="otp_number" type="text" value="" />
-    </.form>
+  <div class="bg-white rounded-lg p-6 sm:p-8 w-full max-w-md mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-1xl sm:text-2xl font-semibold text-gray-900 mb-4 ">
+        Check your Messages
+      </h1>
+      <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+        Please enter the Five digit verification code we sent to<br />
+        <span class="font-medium text-gray-800">0782XXXXX</span>
+      </p>
+    </div>
+    
+<!-- Error Message -->
+    <%= if @error_message do %>
+      <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+        <p class="text-red-600 text-sm text-center">{@error_message}</p>
+      </div>
+    <% end %>
+    
+<!-- Verification Code Input -->
+    <div class="mb-8">
+      <div class="flex flex-nowrap justify-center space-x-2 sm:space-x-3">
+        <%= for {digit, index}  <- Enum.with_index(@code) do %>
+          <input
+            type="number"
+            maxlength="1"
+            class="w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors duration-200 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield border px-2 py-1 rounded"
+            oninput="moveToNext(this, 4)"
+            value={digit}
+            onkeydown="handleBackspace(this, 4, event)"
+            phx-blue="update_digit"
+            phx-value-index={index}
+            phx-key="update_digit"
+            phx-keyup="update_digit"
+            phx-value-index={index}
+            phx-paste="paste_code"
+            data-index={index}
+            autocomplete="off"
+            inputmode="numeric"
+          />
+        <% end %>
+      </div>
+    </div>
+    
+<!-- Confirm Button -->
+    <button
+      phx-click="confirm_code"
+      disabled={@confirming}
+      class={[
+        "w-full font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+        if(@confirming,
+          do: "bg-blue-400 text-white cursor-not-allowed",
+          else: "bg-blue-600 hover:bg-blue-700 text-white"
+        )
+      ]}
+    >
+      <%= if @confirming do %>
+        <div class="flex items-center justify-center">
+          <svg
+            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            >
+            </circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            >
+            </path>
+          </svg>
+          Confirming...
+        </div>
+      <% else %>
+        Confirm
+      <% end %>
+    </button>
+    <!-- Resend Code Link -->
+    <div class="text-center mt-6">
+      <p
+        onclick="resendCode()"
+        class="text-makeja-dark hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+      >
+        Didn't receive the code? <button class="text-blue-500 ">Resend</button>
+      </p>
+    </div>
   </div>
+  <script>
+    // Client-side JavaScript for better UX
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input[type="number"]');
+      
+      inputs.forEach((input, index) => {
+        // Auto-focus next input
+        input.addEventListener('input', function(e) {
+          if (this.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+        
+        // Handle backspace
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && this.value === '' && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
+        
+        // Handle paste
+        input.addEventListener('paste', function(e) {
+          e.preventDefault();
+          const paste = (e.clipboardData || window.clipboardData).getData('text');
+          const digits = paste.replace(/[^0-9]/g, '').slice(0, 5);
+          
+          // Trigger LiveView paste event
+          this.dispatchEvent(new CustomEvent('phx:paste_code', {
+            detail: { value: digits }
+          }));
+        });
+      });
+      
+      // Focus first input on page load
+      if (inputs.length > 0) {
+        inputs[0].focus();
+      }
+    });
+  </script>
 </.modal>
