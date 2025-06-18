@@ -34,7 +34,9 @@ defmodule MakejaWeb.LoginLive do
     verify_password(phone_number, password)
     |> case do
       true ->
-        {:noreply, put_flash(socket, :info, "Welcome")}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Otp has been sent")}
 
       false ->
         {:noreply, put_flash(socket, :error, "Buda, wrong Password")}

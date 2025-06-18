@@ -67,7 +67,12 @@ defmodule MakejaWeb.SignUpLive do
             "Welcome #{user.username}"
             |> IO.inspect(label: "hakuna error")
 
-            {:noreply, put_flash(socket, :info, "Buda welcome")}
+            {:noreply,
+             socket
+             |> put_flash(:info, "Otp has been sent")
+             |> redirect(to: "/example")}
+
+          # {:noreply, put_flash(socket, :info, "Buda welcome")}
 
           {:error, reason} ->
             "Error creating account"

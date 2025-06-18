@@ -1,0 +1,8 @@
+<.modal id="otp" show={true} on_cancel={JS.navigate(~p"/login")}>
+  <div>
+    <h1 class="text-center ">Enter Your <span class="w-bold">OTP</span></h1>
+    <.form for={}>
+      <.input name="otp_number" type="text" value="" />
+    </.form>
+  </div>
+</.modal>

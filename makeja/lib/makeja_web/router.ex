@@ -22,6 +22,8 @@ defmodule MakejaWeb.Router do
     live "/houses", HousesLive
     live "/signup", SignUpLive
     live "/login", LoginLive
+    live "/otp", OtpLive
+    live "/example", OLive
     live "/", HomeLive
   end
 

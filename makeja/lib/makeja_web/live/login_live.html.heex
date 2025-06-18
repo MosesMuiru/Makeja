@@ -15,9 +15,11 @@
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <.form class="space-y-6" for={} phx-click="login_to_account">
+    <.form class="space-y-6" for={}>
       <div>
-        <label for="email" class="block text-sm/6 font-medium text-gray-900">Phone Number</label>
+        <label for="email" class="block text-sm/6 font-medium text-gray-900">
+          Phone Number<span class="text-red-500">* </span>
+        </label>
         <div class="mt-2">
           <.input
             type="tel"
@@ -31,7 +33,9 @@
 
       <div>
         <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+          <label for="password" class="block text-sm/6 font-medium text-gray-900">
+            Password<span class="text-red-500">* </span>
+          </label>
           <div class="text-sm">
             <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">
               Forgot password?

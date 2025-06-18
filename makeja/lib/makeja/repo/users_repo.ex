@@ -15,6 +15,7 @@ defmodule Makeja.Repo.UsersRepo do
   @spec insert_user(user_t) :: response_t
   def insert_user(user) do
     check_if_user_exists(:phone_number, user.phone_number)
+    |> IO.inspect(label: "phone_number")
     |> case do
       true ->
         %Users{}
@@ -47,9 +48,10 @@ defmodule Makeja.Repo.UsersRepo do
     Users
     |> where([u], u.phone_number == ^phone_number)
     |> Repo.all()
+    |> IO.inspect(label: "returrnnn---")
     |> case do
-      {:ok, _} -> true
-      _ -> false
+      {:ok, _} -> false
+      _ -> true
     end
   end
 
