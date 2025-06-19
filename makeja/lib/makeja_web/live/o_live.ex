@@ -58,17 +58,27 @@ defmodule MakejaWeb.OLive do
 
   @impl true
   def handle_event("confirm_code", params, socket) do
-    params
-    |> IO.inspect(label: "-----code")
+    input = ""
+
+    input =
+      params
+      |> IO.inspect(label: "-----code")
+      |> Enum.map(fn {_key, value} ->
+        # form a new  form a new string 
+
+        input <> value
+      end)
+      |> Enum.join()
+      |> IO.inspect(label: "inputt")
 
     code_string = Enum.join(socket.assigns.code)
     IO.inspect(socket.assigns.code, label: "This is wrokin")
 
-    if String.length(code_string) != 5 do
+    if String.length(input) != 5 do
       {:noreply, assign(socket, :error_message, "Please enter all 5 digits")}
     else
       # Start confirmation process
-      send(self(), {:confirm_code, code_string})
+      send(self(), {:confirm_code, input})
 
       {:noreply,
        socket
