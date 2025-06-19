@@ -19,72 +19,67 @@
     <% end %>
     
 <!-- Verification Code Input -->
-    <div class="mb-8">
-      <div class="flex flex-nowrap justify-center space-x-2 sm:space-x-3">
-        <%= for {digit, index}  <- Enum.with_index(@code) do %>
-          <input
-            type="number"
-            maxlength="1"
-            class="w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors duration-200 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield border px-2 py-1 rounded"
-            oninput="moveToNext(this, 4)"
-            value={digit}
-            onkeydown="handleBackspace(this, 4, event)"
-            phx-blue="update_digit"
-            phx-value-index={index}
-            phx-key="update_digit"
-            phx-keyup="update_digit"
-            phx-value-index={index}
-            phx-paste="paste_code"
-            data-index={index}
-            autocomplete="off"
-            inputmode="numeric"
-          />
-        <% end %>
-      </div>
-    </div>
-    
-<!-- Confirm Button -->
-    <button
-      phx-click="confirm_code"
-      disabled={@confirming}
-      class={[
-        "w-full font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-        if(@confirming,
-          do: "bg-blue-400 text-white cursor-not-allowed",
-          else: "bg-blue-600 hover:bg-blue-700 text-white"
-        )
-      ]}
-    >
-      <%= if @confirming do %>
-        <div class="flex items-center justify-center">
-          <svg
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            >
-            </circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            >
-            </path>
-          </svg>
-          Confirming...
+
+    <form phx-change="change" phx-submit="confirm_code" class="">
+      <div class="mb-8 space-y-4">
+        <div class="flex flex-nowrap justify-center space-x-2 sm:space-x-3">
+          <%= for {digit, index} <- Enum.with_index(@code) do %>
+            <input
+              type="text"
+              maxlength="1"
+              class="w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors duration-200 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield border px-2 py-1 rounded"
+              name={"#{index}"}
+              phx-keydown="digit"
+              autocomplete="off"
+              inputmode="numeric"
+            />
+          <% end %>
         </div>
-      <% else %>
-        Confirm
-      <% end %>
-    </button>
+        
+<!-- Confirm Button -->
+        <button
+          type="submit"
+          disabled={@confirming}
+          class={[
+            "w-full font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+            if(@confirming,
+              do: "bg-blue-400 text-white cursor-not-allowed",
+              else: "bg-blue-600 hover:bg-blue-700 text-white"
+            )
+          ]}
+        >
+          <%= if @confirming do %>
+            <div class="flex items-center justify-center">
+              <svg
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                >
+                </circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                >
+                </path>
+              </svg>
+              Confirming...
+            </div>
+          <% else %>
+            Confirm
+          <% end %>
+        </button>
+      </div>
+    </form>
     <!-- Resend Code Link -->
     <div class="text-center mt-6">
       <p
@@ -96,9 +91,65 @@
     </div>
   </div>
   <script>
+    const inputs = document.querySelectorAll('input[type="text"]');
+
+    console.log("fakjfaklj", inputs)
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', function(e) {
+        if(this.value.length == 1 && index < inputs.length -1){
+          inputs[index+1].focus();
+      }
+    })
+
+    // this will handle the backspace
+
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && this.value == '' && index > 0){
+          inputs[index-1].focus();
+      }
+    })
+
+    // this will handle the paste
+
+      input.addEventListener('paste', function(e) {
+        e.preventDefault();
+
+        const paste =  navigator.clipboard.readText()
+          .then((response) => {
+
+            // split it, wuue
+            const paste_digits = response.split("")
+            // then i can push the digit to present
+                paste_digits.forEach((digit, index) => {
+                  document.getElementsByName(index.toString()).value = digit
+                  })
+          })
+          .catch((error) => console.log(error))
+
+    })
+    })
+      
+  </script>
+  <!--
+  <script>
     // Client-side JavaScript for better UX
     document.addEventListener('DOMContentLoaded', function() {
       const inputs = document.querySelectorAll('input[type="number"]');
+
+    console.log("this si wrokin")
+    function moveToNext(current, maxLength) {
+      if(current.value.length >= maxLength){
+        const inputs = Array.from(document.querySelectorAll("input[type='number']"));
+          const index = inputs.indexOf(current);
+        if (index !== -1 && index + 1 < inputs.length) {
+            inputs[index + 1].focus();
+        }
+      }
+    }
+
+    function handleBackspace(current, max_length, e) {
+      console.log("this is working")
+    }
       
       inputs.forEach((input, index) => {
         // Auto-focus next input
@@ -118,7 +169,9 @@
         // Handle paste
         input.addEventListener('paste', function(e) {
           e.preventDefault();
+
           const paste = (e.clipboardData || window.clipboardData).getData('text');
+
           const digits = paste.replace(/[^0-9]/g, '').slice(0, 5);
           
           // Trigger LiveView paste event
@@ -134,4 +187,5 @@
       }
     });
   </script>
+-->
 </.modal>

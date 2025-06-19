@@ -12,6 +12,7 @@ defmodule MakejaWeb.OLive do
 
   @impl true
   def handle_event("update_digit", %{"index" => index, "value" => value}, socket) do
+    IO.inspect(index, label: "theee index")
     index = String.to_integer(index)
 
     # Only allow single digits
@@ -23,6 +24,20 @@ defmodule MakejaWeb.OLive do
     new_code = List.replace_at(socket.assigns.code, index, sanitized_value)
 
     {:noreply, assign(socket, :code, new_code)}
+  end
+
+  def handle_event("digit", params, socket) do
+    params
+    |> IO.inspect(label: "ppp")
+
+    {:noreply, socket}
+  end
+
+  def handle_event("change", params, socket) do
+    params
+    |> IO.inspect(label: "this si working")
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -42,8 +57,12 @@ defmodule MakejaWeb.OLive do
   end
 
   @impl true
-  def handle_event("confirm_code", _params, socket) do
+  def handle_event("confirm_code", params, socket) do
+    params
+    |> IO.inspect(label: "-----code")
+
     code_string = Enum.join(socket.assigns.code)
+    IO.inspect(socket.assigns.code, label: "This is wrokin")
 
     if String.length(code_string) != 5 do
       {:noreply, assign(socket, :error_message, "Please enter all 5 digits")}

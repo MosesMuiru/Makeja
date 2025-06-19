@@ -32,6 +32,8 @@ Hooks.LayoutHook = {
 
 }
 
+const otp_input = document.getElementById("otp_input")
+console.log("otppppp", otp_input)
 const btn = document.getElementById("test")
 console.log("this is working")
 
