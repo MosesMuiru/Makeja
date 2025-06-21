@@ -18,6 +18,7 @@ defmodule MakejaWeb.Router do
     pipe_through :browser
 
     # get "/", PageController, :home
+    live "/upload", UploadDetailsLive
     live "/house", HomeLive
     live "/houses", HousesLive
     live "/signup", SignUpLive

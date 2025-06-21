@@ -23,7 +23,7 @@
     <form phx-change="change" phx-submit="confirm_code" class="">
       <div class="mb-8 space-y-4">
         <div class="flex flex-nowrap justify-center space-x-2 sm:space-x-3">
-          <%= for {digit, index} <- Enum.with_index(@code) do %>
+          <%= for {_digit, index} <- Enum.with_index(@code) do %>
             <input
               type="text"
               maxlength="1"

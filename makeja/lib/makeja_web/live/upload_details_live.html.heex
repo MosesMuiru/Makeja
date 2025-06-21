@@ -1,0 +1,296 @@
+<div>
+  <.form
+    class="relative overflow-x-auto shadow-md sm:rounded-lg bg-red-200"
+    for={}
+    phx-submit="on_submit"
+  >
+    <div class="pb-4 bg-white ">
+      <label for="table-search" class="sr-only">Search</label>
+      <div class="relative mt-1">
+        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg
+            class="w-4 h-4 text-gray-500 text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="table-search"
+          class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 dark:focus:border-blue-500"
+          placeholder="Search for items"
+        />
+      </div>
+    </div>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+      <thead class="text-xs text-gray-700 uppercase border-b border-gray-200  ">
+        <tr>
+          <th scope="col" class="p-4">
+            <div class="flex items-center">
+              <input
+                id="checkbox-all-search"
+                type="checkbox"
+                class="w-4 h-4 text-blue-600 border-gray-300 rounded-sm focus:ring-blue-500 focus:ring-2 "
+              />
+              <label for="checkbox-all-search" class="sr-only">checkbox</label>
+            </div>
+          </th>
+          <th scope="col" class="px-2 py-3">
+            House Name
+          </th>
+          <th scope="col" class="px-2 py-3">
+            Description
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Property Type
+          </th>
+          <th scope="col" class="px-2 py-3">>
+            Price</th>
+          <th scope="col" class="px-2 py-3">
+            bathrooms
+          </th>
+          <th class="px-2 py-3">
+            bedrooms
+          </th>
+          <th class="px-2 py-3">
+            square_feet
+          </th>
+
+          <th class="px-2 py-3">
+            City
+          </th>
+
+          <th class="px-2 py-3">
+            County
+          </th>
+
+          <th class="px-2 py-3">
+            Latitude
+          </th>
+
+          <th class="px-2 py-3">
+            Longitude
+          </th>
+
+          <th class="px-2 py-3">
+            Images
+          </th>
+
+          <th class="px-2 py-3">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody class="">
+        <tr class="bg-white border-b border-gray-300">
+          <td class="w-4 p-2">
+            <div class="flex items-center">
+              <input
+                id="checkbox-table-3"
+                type="checkbox"
+                class="w-4 h-4 text-blue-600 rounded-sm focus:ring-blue-500 focus:ring-2 "
+              />
+              <label for="checkbox-table-3" class="sr-only">checkbox</label>
+            </div>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @house_name != nil do %>
+              <span class="text-makeja-dark">{@house_name}</span>
+            <% else %>
+              <.input
+                phx-focus="on_focus"
+                phx-blur="on_blur"
+                type="text"
+                placeholder="house name"
+                class="border border-nonring-0"
+                name="house_name"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @description != nil do %>
+              <span class="text-makeja-dark">{@description}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="description"
+                class="border border-nonring-0"
+                name="description"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @property_type != nil do %>
+              <span class="text-makeja-dark">{@property_type}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="property type"
+                class="border border-nonring-0"
+                name="property_type"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @price != nil do %>
+              <span class="text-makeja-dark">{@price}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="price"
+                class="border border-nonring-0"
+                name="price"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @bathrooms != nil do %>
+              <span class="text-makeja-dark">{@bathrooms}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="bathrooms"
+                class="border border-nonring-0"
+                name="bathrooms"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @bedrooms != nil do %>
+              <span class="text-makeja-dark">{@bedrooms}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="bedrooms"
+                class="border border-nonring-0"
+                name="bedrooms"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @square_feet != nil do %>
+              <span class="text-makeja-dark">{@square_feet}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="square feet"
+                class="border border-nonring-0"
+                name="square_feet"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @city != nil do %>
+              <span class="text-makeja-dark">{@city}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="city"
+                class="border border-nonring-0"
+                name="city"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @county != nil do %>
+              <span class="text-makeja-dark">{@county}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="county"
+                class="border border-nonring-0"
+                name="county"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @latitude != nil do %>
+              <span class="text-makeja-dark">{@latitude}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="latitude"
+                class="border border-nonring-0"
+                name="latitude"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <%= if @longitude != nil do %>
+              <span class="text-makeja-dark">{@longitude}</span>
+            <% else %>
+              <.input
+                type="text"
+                placeholder="longitude"
+                class="border border-nonring-0"
+                name="longitude"
+                value=""
+              />
+            <% end %>
+          </td>
+
+          <td class="px-2 py-4">
+            <button
+              phx-click="upload_images"
+              href="#"
+              class="font-medium bg-makeja-dark text-white px-5 p-2 rounded-md hover:bg-gray-700 duration-100 "
+            >
+              Images
+            </button>
+          </td>
+
+          <td class="px-2 py-4">
+            <button
+              href="#"
+              class="font-medium bg-makeja-dark text-white px-5 p-2 rounded-md hover:bg-gray-700 duration-100 "
+            >
+              Save
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </.form>
+  <div :if={@upload_image_modal}>
+    <.modal show={true} id="image_uploader_modal">
+      <div class="text-makeja-dark">Upload Images, and 1 video tour</div>
+      <form id="upload-form" phx-submit="save" phx-change="validate">
+        <.live_file_input class="bg-red-400" upload={@uploads.avatar} />
+        <button type="submit">Upload</button>
+
+        <.upload_component />
+      </form>
+    </.modal>
+  </div>
+</div>

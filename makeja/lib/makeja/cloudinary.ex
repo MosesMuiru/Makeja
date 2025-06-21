@@ -6,6 +6,9 @@ defmodule Makeja.Cloudinary do
     Cloudex.upload(file_url)
     |> case do
       {:ok, response} ->
+        response
+        |> IO.inspect(label: "response -->")
+
         response.url
         |> AttachmentsRepo.insert_at()
 

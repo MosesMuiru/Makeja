@@ -69,10 +69,6 @@ defmodule MakejaWeb.OLive do
         input <> value
       end)
       |> Enum.join()
-      |> IO.inspect(label: "inputt")
-
-    code_string = Enum.join(socket.assigns.code)
-    IO.inspect(socket.assigns.code, label: "This is wrokin")
 
     if String.length(input) != 5 do
       {:noreply, assign(socket, :error_message, "Please enter all 5 digits")}
