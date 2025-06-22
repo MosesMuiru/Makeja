@@ -5,7 +5,10 @@ defmodule MakejaWeb.Components.UploadComponent do
     ~H"""
     <div class="max-w-md mx-auto">
       <!-- Upload Area -->
-      <div class="border-2 border-dashed border-upload-border rounded-lg p-8 text-center bg-upload-bg hover:bg-gray-50 transition-colors duration-200">
+      <.form
+        for={}
+        class="border-2 border-dashed border-upload-border rounded-lg p-8 text-center bg-upload-bg hover:bg-gray-50 transition-colors duration-200"
+      >
         <!-- Upload Icon -->
         <div class="mb-4">
           <svg
@@ -32,10 +35,10 @@ defmodule MakejaWeb.Components.UploadComponent do
         <div class="text-sm">
           <span class="text-gray-500">or </span>
           <button class="text-blue-600 hover:text-blue-700 underline font-medium">
-            browse
+            <.live_file_input upload={@uploads.avatar} />
           </button>
         </div>
-      </div>
+      </.form>
       
     <!-- File List -->
       <div class="mt-4 space-y-2">

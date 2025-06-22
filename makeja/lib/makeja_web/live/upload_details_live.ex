@@ -25,6 +25,7 @@ defmodule MakejaWeb.UploadDetailsLive do
      |> assign(:upload_image_modal, false)
      |> assign(inputs)
      |> assign(:uploaded_files, [])
+     |> assign(:show, false)
      |> allow_upload(:avatar, accept: ~w(.jpg .jpeg .png .mp4), max_entries: 5)}
   end
 
@@ -32,7 +33,6 @@ defmodule MakejaWeb.UploadDetailsLive do
     [_ | [name]] =
       params
       |> Map.keys()
-      |> IO.inspect(label: "this is working")
 
     value = params[name]
 
@@ -49,15 +49,42 @@ defmodule MakejaWeb.UploadDetailsLive do
     {:noreply, socket}
   end
 
-  def handle_event("upload_images", _params, socket) do
-    IO.inspect("Its working")
+  # Forms in put
 
+  def handle_event("save", params, socket) do
+    params
+    |> IO.inspect(label: "THisare the parammmm")
+
+    uploaded_files =
+      consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
+        dest = Path.join(Application.app_dir(:my_app, "priv/static/uploads"), Path.basename(path))
+        # You will need to create `priv/static/uploads` for `File.cp!/2` to work.
+        File.cp!(path, dest)
+        {:ok, ~p"/uploads/#{Path.basename(dest)}"}
+      end)
+
+    params
+    |> IO.inspect(label: "this is the params from the submit")
+
+    socket =
+      socket
+      |> assign(:show, true)
+
+    {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
+  end
+
+  def handle_event("upload_images", _params, socket) do
     socket =
       socket
 
     {:noreply,
      socket
      |> assign(:upload_image_modal, true)}
+  end
+
+  def handle_event("validate", _params, socket) do
+    IO.inspect("Its working")
+    {:noreply, socket}
   end
 
   def handle_event("data-cancel", params, socket) do
@@ -73,4 +100,7 @@ defmodule MakejaWeb.UploadDetailsLive do
 
     {:noreply, socket}
   end
+
+  defp error_to_string(:too_large), do: "Too large"
+  defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
 end
