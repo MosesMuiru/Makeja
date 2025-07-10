@@ -2,8 +2,14 @@ defmodule MakejaWeb.HomeLive do
   use MakejaWeb, :live_view
 
   import MakejaWeb.Components.HouseCard
+  alias Makeja.Repo.HousesRepo
 
   def mount(_params, _args, socket) do
+    houses = HousesRepo.get_all_houses()
+
+    socket
+    |> assign(:houses, houses)
+
     {:ok, socket}
   end
 

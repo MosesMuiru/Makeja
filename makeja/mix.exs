@@ -60,7 +60,9 @@ defmodule Makeja.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:cloudex, "~> 1.4"},
-      {:bcrypt_elixir, "~> 3.3"}
+      {:bcrypt_elixir, "~> 3.3"},
+      {:absinthe, "~> 1.7"},
+      {:absinthe_plug, "~> 1.5"}
     ]
   end
 

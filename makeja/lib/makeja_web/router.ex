@@ -29,9 +29,16 @@ defmodule MakejaWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MakejaWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MakejaWeb do
+    pipe_through :api
+
+    get "/v0/houses", HousesController, :index
+
+    post "/v0/houses/upload", HousesController, :upload
+
+    # graphql
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: MakejaWeb.Schema
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:makeja, :dev_routes) do
