@@ -19,7 +19,8 @@ defmodule Makeja.Repo.AttachmentsRepo do
   end
 
   def get_all_attachments() do
-    %Attachments{}
+    Attachments
     |> Repo.all()
+    |> Repo.preload(:attachments)
   end
 end
