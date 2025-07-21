@@ -28,6 +28,10 @@ defmodule MakejaWeb.Router do
     live "/", HomeLive
   end
 
+  pipeline :graphql do
+    # Will be used later
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", MakejaWeb do
     pipe_through :api
@@ -36,8 +40,24 @@ defmodule MakejaWeb.Router do
 
     post "/v0/houses/upload", HousesController, :upload
 
+    # forward "/graphiql", Absinthe.Plug.GraphiQL,
+    #  schema: MakejaWeb.Graphql.Schema,
+    #  interface: :simple,
+    #  context: %{pubsub: MakejaWeb.Endpoint}
+
+    # forward "/", Absinthe.Plug, schema: MakejaWeb.Graphql.Schema
     # graphql
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: MakejaWeb.Schema
+    #  forward "/", Absinthe.Plug.GraphiQL, schema: MakejaWeb.Schema
+  end
+
+  scope "/v0/g/api" do
+    pipe_through :graphql
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: MakejaWeb.Graphql.Schema,
+      interface: :playground
+
+    forward "/", Absinthe.Plug, schema: MakejaWeb.Graphql.Schema
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
