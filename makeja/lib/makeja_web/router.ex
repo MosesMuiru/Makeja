@@ -28,6 +28,12 @@ defmodule MakejaWeb.Router do
     live "/", HomeLive
   end
 
+  scope "/admin", MakejaWeb do
+    pipe_through :browser
+
+    live "/upload", AdminUploadLive
+  end
+
   pipeline :graphql do
     # Will be used later
   end

@@ -1,0 +1,166 @@
+<div>
+  <.form for={} class="max-w-sm mx-auto" phx-submit="save" phx-change="validate">
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      House Name
+    </label>
+    <.input
+      name="house_name"
+      type="text"
+      id="house-name"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="House Name"
+      required
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Description
+    </label>
+    <.input
+      name="description"
+      type="text"
+      id="description"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="House Description"
+      required
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Property Type
+    </label>
+    <.input
+      name="property_type"
+      type="select"
+      id="property_type"
+      value=""
+      options={[
+        {"Select House Type", ""},
+        {"Hostel", "hostel"},
+        {"Single Room", "single_room"},
+        {"Bedsitter", "bedsitter"},
+        {"One Bedroom", "one_bedroom"},
+        {"Two Bedroom", "two_bedroom"},
+        {"Three Bedroom", "three_bedroom"}
+      ]}
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="House Type"
+      required
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Price
+    </label>
+    <.input
+      name="price"
+      type="text"
+      id="price"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="House Price"
+      required
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Bathrooms
+    </label>
+    <.input
+      name="bathrooms"
+      type="text"
+      id="bathrooms"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="Bathrooms"
+      required
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Bedrooms
+    </label>
+    <.input
+      name="bedrooms"
+      type="text"
+      id="bedrooms"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="Bathrooms"
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      City
+    </label>
+    <.input
+      name="city"
+      type="text"
+      id="city"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="City Located"
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Country
+    </label>
+    <.input
+      name="country"
+      type="text"
+      id="country"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="Country Located"
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Latituge
+    </label>
+    <.input
+      name="latitude"
+      type="text"
+      id="latitude"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="latitude"
+    />
+
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Longitude
+    </label>
+    <.input
+      name="longitude"
+      type="text"
+      id="longitude"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="Longitude"
+    />
+    
+<!--
+    <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
+      Longitude
+    </label>
+    <.input
+      name="lat"
+      type="text"
+      id="longitude"
+      value=""
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+      placeholder="Longitude"
+    />
+    -->
+
+    <div class="bg-gray-100 mt-5 p-4 shadow-md">
+      <h3 class="mb-4">
+        Upload Images and Atleast One House Tour
+      </h3>
+
+      <.live_file_input upload={@uploads.house_images} />
+    </div>
+    <button
+      type="submit"
+      href="#"
+      class="font-medium bg-makeja-dark text-white px-5 p-2 mt-4 rounded-md hover:bg-gray-700 duration-100 "
+    >
+      Save Content
+    </button>
+  </.form>
+</div>
