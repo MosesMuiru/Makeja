@@ -25,17 +25,9 @@ import topbar from "../vendor/topbar"
 
 let Hooks = {}
 
-Hooks.LayoutHook = {
-  this.el.addEventListener("click", (e) => {
-    console.log("this has been clicked": e)
-  })
-
-}
 
 const otp_input = document.getElementById("otp_input")
-console.log("otppppp", otp_input)
 const btn = document.getElementById("test")
-console.log("this is working")
 
 btn.addEventListener("click", (event) => {
   console.log("this butn clieck:", event)
