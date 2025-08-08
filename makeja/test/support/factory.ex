@@ -23,13 +23,10 @@ defmodule Makeja.Factory do
   end
 
   def fetch(factory_name, att) do
-    IO.puts("this is working")
-
     {:ok, attachment} =
       factory_name
       |> build()
       |> Repo.get_by(att)
-      |> IO.inspect(label: "-----")
 
     attachment
   end

@@ -2,7 +2,6 @@ defmodule MakejaWeb.UploadDetailsLive do
   use MakejaWeb, :live_view
 
   import MakejaWeb.CoreComponents
-  import MakejaWeb.Components.UploadComponent
 
   def mount(_params, _session, socket) do
     inputs = %{
@@ -43,9 +42,6 @@ defmodule MakejaWeb.UploadDetailsLive do
   end
 
   def handle_event("on_submit", params, socket) do
-    params
-    |> IO.inspect(label: "submit")
-
     {:noreply, socket}
   end
 
@@ -62,9 +58,6 @@ defmodule MakejaWeb.UploadDetailsLive do
         File.cp!(path, dest)
         {:ok, ~p"/uploads/#{Path.basename(dest)}"}
       end)
-
-    params
-    |> IO.inspect(label: "this is the params from the submit")
 
     socket =
       socket
@@ -83,20 +76,17 @@ defmodule MakejaWeb.UploadDetailsLive do
   end
 
   def handle_event("validate", _params, socket) do
-    IO.inspect("Its working")
     {:noreply, socket}
   end
 
   def handle_event("data-cancel", params, socket) do
     params
-    |> IO.inspect(label: "on focus")
 
     {:noreply, socket}
   end
 
   def handle_event("on_blur", params, socket) do
     params
-    |> IO.inspect(label: "on blur")
 
     {:noreply, socket}
   end

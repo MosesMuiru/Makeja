@@ -4,24 +4,20 @@ defmodule Makeja.Cache.MnesiaStorage do
   # during start
 
   def start_link(opts) do
-    opts
-    |> IO.inspect(label: "This is where the process is started")
-
     :mnesia.create_schema([node()])
     # :mnesia.change_table_copy_type(:schema, node(), :disc_copies)
     :mnesia.start()
 
-    opts
-    |> IO.inspect(label: "This are the opts")
-
     :mnesia.create_table(Otp, attributes: [:user_id, :otp])
     |> case do
       {:atomic, :ok} ->
-        IO.puts("Otp table created")
+        Logger.info("Table created")
 
       {:aborted, reason} ->
         reason
         |> IO.inspect(label: "Table not Created at init ---->")
+
+        Logger.error(reason, error_code: :table_not_created)
     end
 
     GenServer.start_link(__MODULE__, opts)
@@ -48,7 +44,7 @@ defmodule Makeja.Cache.MnesiaStorage do
     :mnesia.create_table(table_name, attributes: list_of_column_names ++ [:ttl])
     |> case do
       {:atomic, :ok} ->
-        IO.inspect(label: "table created")
+        Logger.info("Table created")
 
       {:aborted, Reason} ->
         Reason

@@ -27,11 +27,6 @@ let Hooks = {}
 
 
 const otp_input = document.getElementById("otp_input")
-const btn = document.getElementById("test")
-
-btn.addEventListener("click", (event) => {
-  console.log("this butn clieck:", event)
-})
 
 
 

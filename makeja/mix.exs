@@ -62,7 +62,8 @@ defmodule Makeja.MixProject do
       {:cloudex, "~> 1.4"},
       {:bcrypt_elixir, "~> 3.3"},
       {:absinthe, "~> 1.7"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 

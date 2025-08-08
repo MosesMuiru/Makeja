@@ -13,9 +13,7 @@ defmodule Makeja.AttachmentsTest do
     end
 
     test "Fetch att by uuid", response do
-      IO.inspect(response, label: "this is the attachment")
       {:ok, attachment} = AttachmentsRepo.get_attachments_by_id(response.uuid)
-      IO.inspect(attachment, label: "this is the attachment")
       assert response.uuid == attachment.uuid
     end
   end

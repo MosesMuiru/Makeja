@@ -10,7 +10,6 @@
       value=""
       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
       placeholder="House Name"
-      required
     />
 
     <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
@@ -23,7 +22,6 @@
       value=""
       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
       placeholder="House Description"
-      required
     />
 
     <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
@@ -45,7 +43,6 @@
       ]}
       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
       placeholder="House Type"
-      required
     />
 
     <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
@@ -58,7 +55,6 @@
       value=""
       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
       placeholder="House Price"
-      required
     />
 
     <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
@@ -71,7 +67,6 @@
       value=""
       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
       placeholder="Bathrooms"
-      required
     />
 
     <label for="email" class="block mt-2 text-sm font-medium text-gray-900 ">
@@ -152,15 +147,46 @@
       <h3 class="mb-4">
         Upload Images and Atleast One House Tour
       </h3>
+      <section phx-drop-target={@uploads.house_images.ref} class="my-5">
+        <%!-- render each avatar entry --%>
+        <article :for={entry <- @uploads.house_images.entries} class="upload-entry">
+          <figure class="border">
+            <.live_img_preview entry={entry} />
+            <figcaption>{entry.client_name}</figcaption>
+          </figure>
+
+          <%!-- entry.progress will update automatically for in-flight entries --%>
+          <progress value={entry.progress} max="100">{entry.progress}%</progress>
+
+          <%!-- a regular click event whose handler will invoke Phoenix.LiveView.cancel_upload/3 --%>
+          <button
+            type="button"
+            phx-click="cancel-upload"
+            phx-value-ref={entry.ref}
+            aria-label="cancel"
+          >
+            &times;
+          </button>
+
+          <%!-- Phoenix.Component.upload_errors/2 returns a list of error atoms --%>
+          <p :for={err <- upload_errors(@uploads.house_images, entry)} class="alert alert-danger">
+            {error_to_string(err)}
+          </p>
+        </article>
+
+        <%!-- Phoenix.Component.upload_errors/1 returns a list of error atoms --%>
+        <p :for={err <- upload_errors(@uploads.house_images)} class="alert alert-danger">
+          {error_to_string(err)}
+        </p>
+      </section>
 
       <.live_file_input upload={@uploads.house_images} />
     </div>
     <button
       type="submit"
-      href="#"
       class="font-medium bg-makeja-dark text-white px-5 p-2 mt-4 rounded-md hover:bg-gray-700 duration-100 "
     >
-      Save Content
+      Save Contents
     </button>
   </.form>
 </div>

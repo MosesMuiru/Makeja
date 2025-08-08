@@ -23,14 +23,9 @@ defmodule MakejaWeb.LoginLive do
 
   def handle_event(
         "submit",
-        %{"phone_number" => phone_number, "password" => password} = params,
+        %{"phone_number" => phone_number, "password" => password} = _params,
         socket
       ) do
-    IO.inspect(label: "------")
-
-    params.password
-    |> IO.inspect(label: "params ->")
-
     verify_password(phone_number, password)
     |> case do
       true ->
@@ -45,20 +40,14 @@ defmodule MakejaWeb.LoginLive do
 
   @spec verify_password(String.t(), String.t()) :: boolean
   def verify_password(phone_number, password) do
-    IO.inspect("this is working, password  verifier")
-
     phone_number
     |> UsersRepo.get_user_by_phone_number()
     |> case do
       {:ok, user} ->
-        user
-        |> IO.inspect(label: "this is the user")
-
         Bcrypt.verify_pass(password, user.password_hash)
 
       {:error, reason} ->
         reason
-        |> IO.inspect()
 
         false
     end
